@@ -1,0 +1,60 @@
+
+/* ==========================================================================
+   Layout / Grids
+   ========================================================================== */
+
+
+.container {
+    max-width: 1200px;
+    padding: 0 25px;
+    margin: 0 auto;
+}
+
+.row  {
+    @include clear;
+    max-width: 100%;
+}
+
+.row .row {
+    max-width: none;
+    min-width: 0;
+    width: auto;
+}
+
+.column, .columns {
+    float: left;
+    min-height: 1px;
+    position: relative;
+
+    @include break($mobile) {
+        clear: both;
+        padding: 0 !important;
+        width: 100% !important;
+    }
+}
+
+[class*="column"] + [class*="column"]:last-child  { float: right; }
+[class*="column"] + [class*="column"].end         { float: right; }
+
+.row .one    { width: 8.33%; }
+.row .two    { width: 16.66%; }
+.row .three  { width: 25%; }
+.row .four   { width: 33.33%; }
+.row .five   { width: 41.66%; }
+.row .six    { width: 50%; }
+.row .seven  { width: 58.33%; }
+.row .eight  { width: 66.66%; }
+.row .nine   { width: 75%; }
+.row .ten    { width: 83.33%; }
+.row .eleven { width: 91.66%; }
+.row .twelve { width: 100%; }
+
+
+// Grid Padding
+
+.suffix-20 { padding-right: 20px; }
+.suffix-40 { padding-right: 40px; }
+
+.prefix-20 { padding-left: 20px; }
+.prefix-40 { padding-left: 40px; }
+

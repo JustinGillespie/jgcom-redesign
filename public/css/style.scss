@@ -1,0 +1,605 @@
+
+// Colors
+
+$black: #0f0f0f;
+$blue: #70C6F4;
+
+$text-select-color: $blue; //#b3d4fc;
+
+// Fonts
+
+$futura: "futura-pt", sans-serif;
+$georgia: Georgia, Times, 'Times New Roman', serif;
+
+// Breakpoints
+
+$mobile: 700px;
+
+// Import Sass Files
+
+@import "vendor/normalize";
+@import "lib/mixins";
+@import "lib/grids";
+@import "lib/helpers";
+@import "lib/print";
+
+
+
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+html {
+    background: $black;
+    box-sizing: border-box;
+    color: #222;
+    font-size: 1em;
+    line-height: 1.4;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    font-family: $futura;
+}
+
+/*
+ * Remove text-shadow in selection highlight:
+ * https://twitter.com/miketaylr/status/12228805301
+ *
+ * These selection rule sets have to be separate.
+ * Customize the background color to match your design.
+ */
+
+::-moz-selection {
+    background: $text-select-color;
+    text-shadow: none;
+}
+
+::selection {
+    background: $text-select-color;
+    text-shadow: none;
+}
+
+/*
+ * A better looking default horizontal rule
+ */
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+/*
+ * Remove the gap between audio, canvas, iframes,
+ * images, videos and the bottom of their containers:
+ * https://github.com/h5bp/html5-boilerplate/issues/440
+ */
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+    vertical-align: middle;
+}
+
+
+
+/* ==========================================================================
+   Forms
+   ========================================================================== */
+
+
+
+/*
+ * Remove default fieldset styles.
+ */
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+
+textarea {
+    resize: vertical;
+}
+
+
+
+/* ==========================================================================
+   Typeography
+   ========================================================================== */
+
+
+
+h1, h2 {
+    font-family: $georgia;
+    font-weight: normal;
+    font-style: italic;
+    margin: 0;
+}
+
+h1 {
+    @include font-size(3);
+    line-height: 1.3em;
+    margin-bottom: 5px;
+
+    @include break($mobile) { @include font-size(2.1); }
+}
+
+h2 {
+    @include font-size(1.3);
+    color: #888;
+
+    @include break($mobile) { @include font-size(1.1); }
+}
+
+
+
+/* ==========================================================================
+   UI
+   ========================================================================== */
+
+
+
+// Fancy Links
+
+.fancy {
+
+    @include font-size(0.8);
+    @include transition(all 0.3s ease-in-out 0s);
+
+    color: white;
+    display: inline-block;
+    text-transform: uppercase;
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: 0.20em;
+    position: relative;
+
+    &:hover {
+        color: #ccc;
+    }
+
+    // Underline
+
+    &:before {
+        @include transition(all 0.3s ease-in-out 0s);
+
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        bottom: -5px;
+        left: 0;
+        background-color: $blue;
+        visibility: hidden;
+        -webkit-transform: scaleX(0);
+        transform: scaleX(0);
+    }
+
+    &:hover:before {
+        visibility: visible;
+        -webkit-transform: scaleX(1);
+        transform: scaleX(1);
+    }
+
+}
+
+// Buttons
+
+
+.actions {
+    margin-top: 40px;
+}
+
+.button {
+    @include font-size(0.8);
+    @include transition(all 0.3s ease-in-out 0s);
+
+    border: 2px solid $black;
+    color: $black;
+    display: inline-block;
+    font-weight: 600;
+    padding: 10px 18px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.20em;
+    position: relative;
+
+    &:hover {
+        border: 2px solid $blue;
+        color: white;
+    }
+
+    &:before {
+        @include transition(all 0.3s ease-in-out 0s);
+
+        background-color: $blue;
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 0%;
+        z-index: -1;
+    }
+
+    &:hover:before {
+        width: 100%;
+    }
+}
+
+
+/* ==========================================================================
+   Screen Overlay
+   ========================================================================== */
+
+
+
+.overlay-trigger {
+    display: inline-block;
+    position: fixed;
+    right: 20px;
+    top: 20px;
+    z-index: 0;
+    @include break($mobile) { display: none;  }
+}
+
+.overlay-container {
+    @include transition(opacity 0.3s ease-in);
+
+    background: white;
+    position: fixed;
+    padding: 30px 30px 30px 30px;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    padding-top: 70px;
+    opacity: 0;
+    overflow-y: scroll;
+    z-index: -3;
+
+    &.on {
+        z-index: 100;
+        opacity: 1;
+    }
+
+    &.off {
+        opacity: 0;
+    }
+
+    a {
+        color: $black;
+    }
+}
+
+.overlay-container .content {
+    @include transition(all 0.3s ease-in 0.2s);
+    text-align: center;
+    position: relative;
+    padding-top: 100px;
+    top: 30px;
+    opacity: 0;
+
+    .fancy { @include font-size(2.4); }
+}
+
+.overlay-container.on .content {
+    opacity: 1;
+    top: 0;
+}
+
+
+.close {
+    @include font-size(1.2);
+    @include rounded-corners(50px);
+    @include transition(all 0.3s ease-in);
+
+    border-width: 2px;
+    border-style: solid;
+    border-color: $black;
+
+    height: 30px;
+    width: 30px;
+    line-height: 1.1em;
+    text-align: center;
+    display: block;
+    text-decoration: none;
+    position: absolute;
+    top: 25px;
+    right: 35px;
+
+    &:hover {
+        background: $blue;
+        border-color: $blue;
+        color: white;
+    }
+}
+/* ==========================================================================
+   Intro
+   ========================================================================== */
+
+
+
+.background-video {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -2;
+
+    @include break($mobile) { display: none; }
+}
+
+.background-overlay {
+    background: $black;
+    opacity: 0.8;
+    @include fullscreen(-1);
+    @include break($mobile) { display: none; }
+}
+
+.intro {
+    @include fullscreen(-1);
+    color: white;
+    @include break($mobile) {
+        background: $black;
+        position: relative;
+        padding: 0px 30px 50px 30px;
+    }
+}
+
+.intro h1 {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 700px;
+    padding-bottom: 70px;
+}
+
+.intro + .panel {
+    margin-top: 100%;
+    @include break($mobile) { margin-top: 0; }
+}
+
+.logo {
+   background: url("../img/logo.png") no-repeat;
+   height: 90px;
+   width: 90px;
+   margin: 0 auto;
+   @include retina("../img/logo-@2X.png", 90px, 90px);
+}
+
+.caption {
+    @include font-size(1.150);
+    font-family: $futura;
+    text-transform: uppercase;
+    letter-spacing: 0.170em;
+    margin: 25px 0 100px 0;
+
+    @include break($mobile) {
+        @include font-size(0.8);
+    }
+}
+
+
+// Scrolling mouse animation
+
+.scroll {
+    position: fixed;
+    bottom: 15px;
+    text-align: center;
+    left: 50%;
+    margin-left: -60px;
+    width: 120px;
+}
+
+.scroll .motion {
+    @include transition(height 0.4s ease-in-out 0s);
+
+    width: 2px;
+    height: 20px;
+    margin: 0 auto 4px auto;
+    display: inline-block;
+    zoom: 1;
+    border-left: 2px dotted $blue;
+
+
+    -webkit-animation: scrolling 0.9s ease-in-out infinite;
+    -moz-animation: scrolling 0.9s ease-in-out infinite;
+    animation: scrolling 0.9s ease-in-out infinite;
+}
+
+
+.scroll .mouse {
+    display: block;
+    margin: 0 auto;
+    width: 30px;
+    height: 50px;
+}
+
+.scroll .text {
+    @include font-size(0.6);
+    display: block;
+    font-family: $futura;
+    text-transform: uppercase;
+    letter-spacing: 0.170em;
+    margin-top: 10px;
+}
+
+
+/* ==========================================================================
+   Mobile only contact button
+   ========================================================================== */
+
+
+.mobile-contact {
+    background: lighten($black, 7%);
+    display: none !important;
+    text-align: center;
+    padding: 30px;
+
+    @include break($mobile) {
+        display: block !important;
+    }
+}
+
+.mobile-contact a {
+    @include font-size(0.8);
+
+    border: 2px solid white;
+    color: white;
+    display: inline-block;
+    font-weight: 600;
+    padding: 10px 18px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.20em;
+    position: relative;
+}
+
+
+/* ==========================================================================
+   Panels
+   ========================================================================== */
+
+
+
+.panel {
+    background-color: white;
+    color: $black;
+    position: relative;
+    z-index: 100;
+    overflow: hidden;
+    padding: 70px 0;
+
+    // Gray Panel Color
+    &.alt {
+        background-color: #ebebeb;
+        color: $black;
+    }
+
+    // Black Panel Color
+    &.dark {
+        background-color: $black;
+        color: white;
+        padding: 140px 0;
+
+        @include break($mobile) { padding: 70px 25px; }
+    }
+
+    @include break($mobile) {
+        text-align: center;
+    }
+}
+
+.project-image {
+    @include transition(all 0.8s);
+    opacity: 0;
+    position: relative;
+    top: 25px;
+    max-width: 100%;
+
+    @include break($mobile) { opacity: 1; top: 0; margin-bottom: 30px; }
+}
+
+.project-description {
+    @include transition(all 0.8s);
+    position: relative;
+    right: -40px;
+    opacity: 0;
+
+    a { color: $black }
+
+    @include break($mobile) { opacity: 1; right: 0; }
+}
+
+.animate-in-bottom  { opacity: 1; top: 0 }
+.animate-in-right   { opacity: 1; right: 0 }
+
+.tags { @include list-reset; margin: 45px auto;  }
+
+.tags li {
+    @include font-size(0.7);
+    @include rounded-corners(5px);
+    display: inline-block;
+    border: 1px solid #eaeaea;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    padding: 3px 5px;
+    margin: 0 3px;
+}
+
+.panel.alt .tags li { border: 1px solid #ddd; }
+
+
+
+/* ==========================================================================
+   Bottom Section
+   ========================================================================== */
+
+
+
+.me {
+    display: block;
+    margin: 13px auto 0 auto;
+    max-width: 150px;
+
+    @include break($mobile) { margin-bottom: 30px; }
+}
+
+footer ul { @include list-reset; margin-top: 15px; }
+footer ul li { display: block; margin: 7px 0 }
+
+footer h2 {
+    @include break($mobile) { margin-top: 40px; }
+}
+
+
+
+/* ==========================================================================
+   Keyframe Animations
+   ========================================================================== */
+
+
+
+@-webkit-keyframes scrolling {
+    from { opacity: 0; height: 0px }
+    to { opacity: 1; height: 30px }
+}
+
+@-moz-keyframes scrolling {
+    from { opacity: 0; height: 0px }
+    to { opacity: 1; height: 30px }
+}
+
+@keyframes scrolling {
+    from { opacity: 0; height: 0px }
+    to { opacity: 1; height: 30px }
+}
+
+
